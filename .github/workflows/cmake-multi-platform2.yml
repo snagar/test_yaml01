@@ -134,4 +134,4 @@ jobs:
       with:
         name: "build-${{ matrix.os }}.exe"
         path: |
-          build/test_yaml
+          build

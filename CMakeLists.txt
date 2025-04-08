@@ -45,12 +45,12 @@ target_sources(${PROJECT_NAME} PRIVATE
 #################################
 
 #if (NOT WIN32)
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
+#target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 #endif()
 
 if (APPLE)
     # We will aim to MacOS version 11.0 and up
-    target_compile_options(${PROJECT_NAME} PUBLIC -mmacosx-version-min=11.0)
+#    target_compile_options(${PROJECT_NAME} PUBLIC -mmacosx-version-min=11.0)
     target_link_libraries(${PROJECT_NAME} -mmacosx-version-min=11.0)
 endif ()
 

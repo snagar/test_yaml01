@@ -42,7 +42,7 @@ jobs:
           path: |
             build/test_yaml
 
-  build:
+  release:
     runs-on: ${{ matrix.os }}
     needs: [build-linux-macos]
 

@@ -6,7 +6,7 @@
 
 int main()
 {
-  std::cout<<"Hello World, Testing YAML";
+  std::cout<<"Hello World, Testing YAML\n";
 
   return 0;
 }

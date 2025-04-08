@@ -26,11 +26,7 @@ set(BASE_SRC
 )
 
 # used to declare the executable target. You can choose any name.
-if (LINUX)
-    add_executable(${PROJECT_NAME})
-else ()
-    add_executable("${PROJECT_NAME}.exe")
-endif ()
+add_executable(${PROJECT_NAME})
 
 ### source files
 ## we add source files necessary to compile app target.
@@ -43,10 +39,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 #################################
 ### Compiler Directives
 #################################
-
-#if (NOT WIN32)
-#target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
-#endif()
 
 if (APPLE)
     # We will aim to MacOS version 11.0 and up

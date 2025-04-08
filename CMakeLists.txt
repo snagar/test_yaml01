@@ -25,11 +25,11 @@ set(BASE_SRC
         src/test_yaml01.cpp
 )
 
-# used to declare the executable target, app. You can choose any other name instead of app.
+# used to declare the executable target. You can choose any name.
 if (LINUX)
-    add_executable("${PROJECT_NAME}.exe")
-else ()
     add_executable(${PROJECT_NAME})
+else ()
+    add_executable("${PROJECT_NAME}.exe")
 endif ()
 
 ### source files
@@ -50,7 +50,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 
 if (APPLE)
     # We will aim to MacOS version 11.0 and up
-#    target_compile_options(${PROJECT_NAME} PUBLIC -mmacosx-version-min=11.0)
+    target_compile_options(${PROJECT_NAME} PUBLIC -mmacosx-version-min=11.0)
     target_link_libraries(${PROJECT_NAME} -mmacosx-version-min=11.0)
 endif ()
 
+install(TARGETS ${PROJECT_NAME})

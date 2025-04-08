@@ -12,41 +12,35 @@ on:
 
 jobs:
 
-build-linux-macos:
-  runs-on: ${{ matrix.os }}
-  strategy:
-    matrix:
-      # use oldest possible ubuntu version in order to avoid compatibility errors with libc
-      os: [ubuntu-22.04, macos-latest]
-    fail-fast: false
-  steps:
-    - uses: actions/checkout@v4
+  build-linux-macos:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # use oldest possible ubuntu version in order to avoid compatibility errors with libc
+        os: [ubuntu-22.04, macos-latest]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
 
-    - name: Build Executable
-      shell: bash
-      env:
-        OS: ${{ matrix.os }}
-      run: |
-        TAG=${GITHUB_REF##*/}
-        if [ ! -z "$TAG" ]; then
-          echo "VERSION=$TAG" > version.mak
-        fi
+      - name: Build Executable
+        shell: bash
+        env:
+          OS: ${{ matrix.os }}
+        run: |
+          TAG=${GITHUB_REF##*/}
+          if [ ! -z "$TAG" ]; then
+            echo "VERSION=$TAG" > version.mak
+          fi
+  
+          cd build
+          make
 
-        cd build
-        make
-#       We do not use Make
-#        if [ $OS == "macos-latest" ]; then
-#          make -f Makefile.mac64
-#        else
-#          make -f Makefile.lin64
-#        fi
-
-    - name: Upload Build Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-${{ matrix.os }}
-        path: |
-          build/test_yaml
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ matrix.os }}
+          path: |
+            build/test_yaml
 
   build:
     runs-on: ${{ matrix.os }}

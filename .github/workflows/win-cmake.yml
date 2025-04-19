@@ -132,12 +132,14 @@ jobs:
           ls -ltR ./download
           
           echo -e "Create the build folder"
-          mkdir -p ${{ github.output.strings.build-output-dir }}
+          mkdir -p ${{ steps.strings.outputs.build-output-dir }}
+          echo -e "\nDisplay build folders before copy:\n"
           ls -l
           
-          #echo -e "Copy .xpl files to the build folder:"
-          #cp ./download/*/*.xpl ${{ github.output.strings.build-output-dir }}
-          
+          echo "copy folders"
+          cp -rdp ./download/*/*_x64 ${{ steps.strings.outputs.build-output-dir }}                   
+          echo -e "\nDisplay after folders before copy:\n"
+          ls -l
           
           
           

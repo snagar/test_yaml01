@@ -62,10 +62,6 @@ jobs:
           echo "Running CMake Build"
           cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} -j 2
 
-      - name: List files
-        shell: bash
-        run: find ${{ steps.strings.outputs.build-output-dir }} -maxdepth 2 -type f
-
 
       - name: Post Build - Prepare binaries folder prior to loading into artifact
         shell: cmd

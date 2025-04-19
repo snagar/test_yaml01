@@ -77,10 +77,10 @@ jobs:
           echo "Copy all ".xpl" files to release folder:"
           IF "${{ matrix.build_type }}" == "Release" (
              echo "Coping the Release binaries"
-             echo copy /B /Y "${{ steps.strings.outputs.build-output-dir }}\Release\${{ steps.strings.outputs.plugin_name }}.xpl" "${{ steps.strings.outputs.target_folder }}\" 
-             copy /B /Y "${{ steps.strings.outputs.build-output-dir }}\Release\${{ steps.strings.outputs.plugin_name }}.xpl" "${{ steps.strings.outputs.target_folder }}\"
-             echo copy /B /Y "${{ steps.strings.outputs.build-output-dir }}\Release\*.xpl" "${{ steps.strings.outputs.target_folder }}\"
-             copy /B /Y "${{ steps.strings.outputs.build-output-dir }}\Release\*.xpl" "${{ steps.strings.outputs.target_folder }}\"
+             echo copy /B /Y "${{ steps.strings.outputs.build-output-dir }}\Release\${{ steps.strings.outputs.plugin_name }}.exe" "${{ steps.strings.outputs.target_folder }}\" 
+             copy /B /Y "${{ steps.strings.outputs.build-output-dir }}\Release\${{ steps.strings.outputs.plugin_name }}.exe" "${{ steps.strings.outputs.target_folder }}\"
+             echo copy /B /Y "${{ steps.strings.outputs.build-output-dir }}\Release\*.exe" "${{ steps.strings.outputs.target_folder }}\"
+             copy /B /Y "${{ steps.strings.outputs.build-output-dir }}\Release\*.exe" "${{ steps.strings.outputs.target_folder }}\"
           ) ELSE (
             echo "Coping the Debug binaries"
             echo copy /B /Y "${{ steps.strings.outputs.build-output-dir }}\Debug\${{ steps.strings.outputs.plugin_name }}.exe" "${{ steps.strings.outputs.target_folder }}\${{ steps.strings.outputs.plugin_name }}.xpl.D" 
@@ -94,9 +94,9 @@ jobs:
           REM for /R "${{ steps.strings.outputs.build-output-dir }}" "%a" IN (missionx.xpl) DO copy /B /Y "%a" "${{ steps.strings.outputs.target_folder }}/missionx.xpl.D"
 
 
-      #- name: Upload Windows Build Artifact
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: build-win
-      #    path: |
-      #      ${{ github.workspace }}/release/*
+      - name: Upload Windows Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-win
+          path: |
+            ${{ github.workspace }}/release/*

@@ -6,7 +6,7 @@ name: V1 - Win build
 on:
   push:
     tags:
-      - 'v*'
+      - '*'
   workflow_dispatch:
 
 

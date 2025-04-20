@@ -30,7 +30,7 @@ jobs:
         run: |
           echo "build-output-dir=${{ github.workspace }}/cmake_build" >> "$GITHUB_OUTPUT"
           echo "target_folder=${{ github.workspace }}/release/mac_x64" >> "$GITHUB_OUTPUT"
-          echo "plugin_name=test_yaml01" >> "$GITHUB_OUTPUT"
+          echo "plugin_name=test_yaml" >> "$GITHUB_OUTPUT"
           echo "OS Build: ${{ matrix.os }}"
 
       - name: Check MacOS Stats
@@ -68,7 +68,7 @@ jobs:
           
           echo "Display files in the working folders"
           find ${{ steps.strings.outputs.build-output-dir }} -maxdepth 2 -type f
-          ls -lR  ${{ steps.strings.outputs.build-output-dir }}
+          # ls -lR  ${{ steps.strings.outputs.build-output-dir }}
           
           if [[ "${{ matrix.build_type }}" == "Release" ]]; then
             echo -e "Coping the Release binaries"
@@ -76,9 +76,13 @@ jobs:
             cp -p -f "${{ steps.strings.outputs.build-output-dir }}/*" "${{ steps.strings.outputs.target_folder }}/"
           else
             echo -e "Coping the Debug binaries"
+            cd ${{ steps.strings.outputs.build-output-dir }}
+            ls -l
+            cp ${{ steps.strings.outputs.plugin_name }}  "${{ steps.strings.outputs.target_folder }}/"
+            #echo -e "Coping the Debug binaries"
             # cp -p -f "${{ steps.strings.outputs.build-output-dir }}/${{ steps.strings.outputs.plugin_name }}" "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.xpl.D"          
             # cp -p -f "${{ steps.strings.outputs.build-output-dir }}/*" "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.xpl.D"          
-            cp -p -f "${{ steps.strings.outputs.build-output-dir }}/*" "${{ steps.strings.outputs.target_folder }}/"          
+            #cp -p -f "${{ steps.strings.outputs.build-output-dir }}/*" "${{ steps.strings.outputs.target_folder }}/"          
           fi
 
   build-win:

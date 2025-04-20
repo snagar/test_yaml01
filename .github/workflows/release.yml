@@ -353,7 +353,7 @@ jobs:
             
             echo -e "github.actor: ${{ github.actor }},  github.repository: ${{ github.repository }}"
             echo -e "\ngithub.ref - ${{ github.ref }} - ${{ github.ref_name }} \n"
-            git remote add authenticated-origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+            # git remote add authenticated-origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           
             ### Push the branch back.. or not
             if [[ $TARGET_BRANCH != "dry-run" ]]; then          

@@ -76,7 +76,7 @@ jobs:
           else
             echo -e "Coping the Debug binaries"
             # cp -p -f "${{ steps.strings.outputs.build-output-dir }}/${{ steps.strings.outputs.plugin_name }}" "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.xpl.D"          
-            cp -p -f "${{ steps.strings.outputs.build-output-dir }}/test*" "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.xpl.D"          
+            cp -p -f "${{ steps.strings.outputs.build-output-dir }}/*test" "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.xpl.D"          
           fi
 
   build-win:

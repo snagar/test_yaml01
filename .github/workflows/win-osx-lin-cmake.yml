@@ -48,7 +48,7 @@ jobs:
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
         run: >
-          cmake -B ${{ steps.strings.outputs.build-output-dir }}/${{ matrix.build_type }}
+          cmake -B ${{ steps.strings.outputs.build-output-dir }}
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
@@ -71,10 +71,10 @@ jobs:
           
           if [[ "${{ matrix.build_type }}" == "Release" ]]; then
             echo -e "Coping the Release binaries"
-            cp -p -f "${{ steps.strings.outputs.build-output-dir }}/${{ matrix.build_type }}/${{ steps.strings.outputs.plugin_name }}" "${{ steps.strings.outputs.target_folder }}/"
+            cp -p -f "${{ steps.strings.outputs.build-output-dir }}/${{ steps.strings.outputs.plugin_name }}" "${{ steps.strings.outputs.target_folder }}/"
           else
             echo -e "Coping the Debug binaries"
-            cp -p -f "${{ steps.strings.outputs.build-output-dir }}/${{ matrix.build_type }}/${{ steps.strings.outputs.plugin_name }}" "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.xpl.D"          
+            cp -p -f "${{ steps.strings.outputs.build-output-dir }}/${{ steps.strings.outputs.plugin_name }}" "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.xpl.D"          
           fi
 
   build-win:

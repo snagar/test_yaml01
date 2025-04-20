@@ -377,16 +377,35 @@ jobs:
             echo -e "Could not find target branch: $TARGET_BRANCH"
             ls -l
           fi
-            
-            
+
+
+      - name: Prepare Binary Files
+        if: ( startsWith(github.ref_name, 'v') )
+        shell: bash
+        run: |
+          # Prepare the release compressed file
+          VERSION=${GITHUB_REF##*/}          
+          echo -e "\nVERSION=${VERSION}\n"
           
+          folder_to_compress="${{ github.workspace }}/release"
+          output_file="${{ github.workspace }}/${{ steps.strings.outputs.plugin-name }}-${VERSION}.7z"
+          split_size="90m"
+          
+          echo "Compressing '$folder_to_compress' to '$output_file'..."
+          (cd ./release && 7z a -t7z -v"$split_size" "${{ github.workspace }}/${{ steps.strings.outputs.plugin-name }}-${VERSION}.7z" *)
+          
+          echo -e "\n---------"
+          ls -l
+          echo -e "\n---------"
+
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
         if: ( startsWith(github.ref_name, 'v') )
         with:
           files: |
-            ${{ steps.strings.outputs.build-output-dir }}/**/*test_yaml*
+            ${{ github.workspace }}/${{ steps.strings.outputs.plugin-name }}*7z*
           prerelease: ${{ contains(github.ref_name, '-b') || contains(github.ref_name, 'beta') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

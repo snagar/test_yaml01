@@ -71,10 +71,10 @@ jobs:
           
           if [[ "${{ matrix.build_type }}" == "Release" ]]; then
             echo -e "Coping the Release binaries"
-            cp -p -f "${{ steps.strings.outputs.build-output-dir }}\${{ matrix.build_type }}\${{ steps.strings.outputs.plugin_name }}" "${{ steps.strings.outputs.target_folder }}\"
+            cp -p -f "${{ steps.strings.outputs.build-output-dir }}/${{ matrix.build_type }}/${{ steps.strings.outputs.plugin_name }}" "${{ steps.strings.outputs.target_folder }}/"
           else
             echo -e "Coping the Debug binaries"
-            cp -p -f "${{ steps.strings.outputs.build-output-dir }}\${{ matrix.build_type }}\${{ steps.strings.outputs.plugin_name }}" "${{ steps.strings.outputs.target_folder }}\${{ steps.strings.outputs.plugin_name }}.xpl.D"          
+            cp -p -f "${{ steps.strings.outputs.build-output-dir }}/${{ matrix.build_type }}/${{ steps.strings.outputs.plugin_name }}" "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.xpl.D"          
           fi
 
   build-win:

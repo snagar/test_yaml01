@@ -318,6 +318,10 @@ jobs:
           ls -ltR ${{ steps.strings.outputs.build-output-dir }}
           
           rm -rf ./download
+
+      - name: Prepare Release Branch
+        shell: bash
+        run: |          
           
           TARGET_BRANCH="dry-run"
           if [[ "${{ github.ref_name }}" =~ ^v ]]; then
@@ -330,30 +334,33 @@ jobs:
             echo "Directory ${TARGET_BRANCH} does exist."
             # cd "$TARGET_BRANCH"
           
+            ## Create target branch
+            git checkout -b ${TARGET_BRANCH}
+          
+          
             echo -e "Configuring git before pushing branch '${TARGET_BRANCH}' ."
             git config --global user.email "snagar.dev@protonmail.com"
             git config --global user.name "snagar"
+                        
+            echo -e "--- Display Branches ---"
+            git branch -a          
             
-            echo "-----"
-            echo -e "Display Branches"
-            git branch -a
-            # display folders
-            echo "-----"
+            echo "---display folders ---"
             ls -lR          
             echo "-----"
-            echo "Preparing branch: ${TARGET_BRANCH}"          
-            echo "-----"
+            echo "Adding files to branch: ${TARGET_BRANCH}"                                  
             git add .         
-            echo -e "\n--------->"
+            echo -e "\n---- git status ---->"
             git status
             echo -e "\n<---------"
             
             echo -e "\nCommit branch ${TARGET_BRANCH}\n---------------------"
             git commit -m "new ${TARGET_BRANCH} - ${{ github.ref_name }}"
             
+            
             echo -e "github.actor: ${{ github.actor }},  github.repository: ${{ github.repository }}"
             echo -e "\ngithub.ref - ${{ github.ref }} - ${{ github.ref_name }} \n"
-            # git remote add authenticated-origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+            git remote add authenticated-origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           
             ### Push the branch back.. or not
             if [[ $TARGET_BRANCH != "dry-run" ]]; then          

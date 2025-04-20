@@ -67,7 +67,7 @@ jobs:
           mkdir -p ${{ steps.strings.outputs.target_folder }}
           
           echo "Display files in the working folders"
-          find ${{ steps.strings.outputs.build-output-dir }} -maxdepth 2 -type f
+          find ${{ steps.strings.outputs.build-output-dir }} -maxdepth 3 -type f
           
           if [[ "${{ matrix.build_type }}" == "Release" ]]; then
             echo -e "Coping the Release binaries"

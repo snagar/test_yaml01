@@ -64,7 +64,7 @@ jobs:
         shell: bash
         run: |
           echo "make release folder"
-          md ${{ steps.strings.outputs.target_folder }}
+          mkdir -p ${{ steps.strings.outputs.target_folder }}
           
           echo "Display files in the working folders"
           find ${{ steps.strings.outputs.build-output-dir }} -maxdepth 2 -type f
@@ -84,8 +84,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ windows-latest ]
-        build_type: [ Debug, Release ]
-        #build_type: [ Debug ]
+        #build_type: [ Debug, Release ]
+        build_type: [ Debug ]
         c_compiler: [ cl ]
         cpp_compiler: [ cl ]
 

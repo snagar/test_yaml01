@@ -326,7 +326,7 @@ jobs:
           
           if [ -d "$TARGET_BRANCH" ]; then
             echo "Directory ${TARGET_BRANCH} does exist."
-            cd "$TARGET_BRANCH"
+            # cd "$TARGET_BRANCH"
           
             echo -e "Configuring git before pushing branch '${TARGET_BRANCH}' ."
             git config --global user.email "snagar.dev@protonmail.com"
@@ -343,13 +343,15 @@ jobs:
             echo "-----"
             git add .         
             echo -e "\n--------->"
-            ls -lR .
+            git status
             echo -e "\n<---------"
             
             echo -e "\nCommit branch ${TARGET_BRANCH}\n---------------------"
             git commit -m "new ${TARGET_BRANCH} - ${{ github.ref_name }}"
             
+            echo -e "github.actor: ${{ github.actor }},  github.repository: ${{ github.repository }}"
             git remote add authenticated-origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          
             ### Push the branch back.. or not
             if [[ $TARGET_BRANCH != "dry-run" ]]; then          
               echo -e "\nPushing ${TARGET_BRANCH}\n---------------------"

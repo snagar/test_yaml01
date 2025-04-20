@@ -68,6 +68,7 @@ jobs:
           
           echo "Display files in the working folders"
           find ${{ steps.strings.outputs.build-output-dir }} -maxdepth 2 -type f
+          ls -lR  ${{ steps.strings.outputs.build-output-dir }}
           
           if [[ "${{ matrix.build_type }}" == "Release" ]]; then
             echo -e "Coping the Release binaries"
@@ -76,7 +77,8 @@ jobs:
           else
             echo -e "Coping the Debug binaries"
             # cp -p -f "${{ steps.strings.outputs.build-output-dir }}/${{ steps.strings.outputs.plugin_name }}" "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.xpl.D"          
-            cp -p -f "${{ steps.strings.outputs.build-output-dir }}/*yaml" "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.xpl.D"          
+            # cp -p -f "${{ steps.strings.outputs.build-output-dir }}/*" "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.xpl.D"          
+            cp -p -f "${{ steps.strings.outputs.build-output-dir }}/*" "${{ steps.strings.outputs.target_folder }}/"          
           fi
 
   build-win:

@@ -324,7 +324,7 @@ jobs:
           
           echo -e "The target branch is: '$TARGET_BRANCH' "
           
-          if [ -d "TARGET_BRANCH" ]; then
+          if [ -d "$TARGET_BRANCH" ]; then
             echo "Directory ${TARGET_BRANCH} does exist."
             cd "$TARGET_BRANCH"
           
@@ -361,6 +361,9 @@ jobs:
             else
               echo "Will not push back the '$TARGET_BRANCH'. It is only for tests."
             fi
+          else
+            echo -e "Could not find target branch: $TARGET_BRANCH"
+            ls -l
           fi
             
             

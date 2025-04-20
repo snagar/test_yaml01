@@ -72,18 +72,24 @@ jobs:
           
           if [[ "${{ matrix.build_type }}" == "Release" ]]; then
             echo -e "Coping the Release binaries"
-            # cp -p -f "${{ steps.strings.outputs.build-output-dir }}/${{ steps.strings.outputs.plugin_name }}" "${{ steps.strings.outputs.target_folder }}/"
-            cp -p -f "${{ steps.strings.outputs.build-output-dir }}/*" "${{ steps.strings.outputs.target_folder }}/"
+            cd ${{ steps.strings.outputs.build-output-dir }}
+            ls -l
+            cp ${{ steps.strings.outputs.plugin_name }}  "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}"
+            ls -l ${{ steps.strings.outputs.target_folder }}
           else
             echo -e "Coping the Debug binaries"
             cd ${{ steps.strings.outputs.build-output-dir }}
             ls -l
-            cp ${{ steps.strings.outputs.plugin_name }}  "${{ steps.strings.outputs.target_folder }}/"
-            #echo -e "Coping the Debug binaries"
-            # cp -p -f "${{ steps.strings.outputs.build-output-dir }}/${{ steps.strings.outputs.plugin_name }}" "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.xpl.D"          
-            # cp -p -f "${{ steps.strings.outputs.build-output-dir }}/*" "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.xpl.D"          
-            #cp -p -f "${{ steps.strings.outputs.build-output-dir }}/*" "${{ steps.strings.outputs.target_folder }}/"          
+            cp ${{ steps.strings.outputs.plugin_name }}  "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.D"
+            ls -l ${{ steps.strings.outputs.target_folder }}
           fi
+
+      - name: Upload MacOS Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-macos-${{ matrix.build_type }}
+          path: |
+            ${{ github.workspace }}/release/*
 
   build-win:
     #if: ( 1 == 2 )

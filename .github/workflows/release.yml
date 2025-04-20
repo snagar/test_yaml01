@@ -317,7 +317,7 @@ jobs:
         if: ( startsWith(github.ref_name, 'v') )
         with:
           files: |
-            ${{ steps.strings.outputs.build-output-dir }}
+            ${{ steps.strings.outputs.build-output-dir }}/*
           prerelease: ${{ contains(github.ref_name, '-b') || contains(github.ref_name, 'beta') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

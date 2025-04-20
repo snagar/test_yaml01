@@ -270,9 +270,11 @@ jobs:
             ${{ github.workspace }}/release/*
 
   build:
+    if: ( startsWith(github.ref_name, 'v') )
     runs-on: ubuntu-22.04
     needs: [ build-osx, build-lin ]
-#    needs: [build-win, build-osx, build-lin ]
+    # needs: [build-win, build-osx, build-lin ]
+
     # Steps to download artifact and combine to final build
     steps:
       - uses: actions/checkout@v4 
@@ -284,7 +286,7 @@ jobs:
         id: strings
         shell: bash
         run: |
-          echo "build-output-dir=${{ github.workspace }}/build/missionx" >> "$GITHUB_OUTPUT"          
+          echo "build-output-dir=${{ github.workspace }}/release/missionx" >> "$GITHUB_OUTPUT"          
           echo "plugin_name=test_yaml01" >> "$GITHUB_OUTPUT"
           echo "OS Build: ${{ matrix.os }}"
 
@@ -297,20 +299,71 @@ jobs:
       - name: Prepare release folder
         shell: bash
         run: |
+          echo -e "\n-- github.ref_name: ${{ github.ref_name }} -- \n"
+          
           echo -e "Display download folder content"
           ls -ltR ./download
           
           echo -e "Create the build folder"
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}
+          ls -l
+          
           echo -e "\n\nDisplay build folders before copy:\n\n"
           ls -ltR ${{ steps.strings.outputs.build-output-dir }}
           
           echo "copy folders"
           cp -rdp ./download/*/*_x64 ${{ steps.strings.outputs.build-output-dir }}   
           
-          echo -e "\n\nDisplay after folders before copy:\n\n"
+          echo -e "\n\nDisplay after folders before copy:\n\n"                    
           ls -ltR ${{ steps.strings.outputs.build-output-dir }}
           
+          TARGET_BRANCH="dry-run"
+          if [[ "${{ github.ref_name }}" =~ ^v ]]; then
+            TARGET_BRANCH="release"          
+          fi
+          
+          echo -e "The target branch is: '$TARGET_BRANCH' "
+          
+          if [ -d "TARGET_BRANCH" ]; then
+            echo "Directory ${TARGET_BRANCH} does exist."
+            cd "$TARGET_BRANCH"
+          
+            echo -e "Configuring git before pushing branch '${TARGET_BRANCH}' ."
+            git config --global user.email "snagar.dev@protonmail.com"
+            git config --global user.name "snagar"
+            
+            echo "-----"
+            echo -e "Display Branches"
+            git branch -a
+            # display folders
+            echo "-----"
+            ls -lR          
+            echo "-----"
+            echo "Preparing branch: ${TARGET_BRANCH}"          
+            echo "-----"
+            git add .         
+            echo -e "\n--------->"
+            ls -lR .
+            echo -e "\n<---------"
+            
+            echo -e "\nCommit branch ${TARGET_BRANCH}\n---------------------"
+            git commit -m "new ${TARGET_BRANCH} - ${{ github.ref_name }}"
+            
+            git remote add authenticated-origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+            ### Push the branch back.. or not
+            if [[ $TARGET_BRANCH != "dry-run" ]]; then          
+              echo -e "\nPushing ${TARGET_BRANCH}\n---------------------"
+              git push authenticated-origin ${TARGET_BRANCH} --force
+                        
+              echo -e "TARGET_BRANCH - ${TARGET_BRANCH}"
+              echo -e "\ngithub.ref - ${{ github.ref }} - ${{ github.ref_name }} \n"
+              git branch -a
+            else
+              echo "Will not push back the '$TARGET_BRANCH'. It is only for tests."
+            fi
+          fi
+            
+            
           
       - name: Create Release
         id: create_release

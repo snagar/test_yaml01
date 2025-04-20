@@ -29,8 +29,8 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/cmake_build" >> "$GITHUB_OUTPUT"
-          echo "target_folder=${{ github.workspace }}/release/mac_x64" >> "$GITHUB_OUTPUT"
-          echo "plugin_name=test_yaml" >> "$GITHUB_OUTPUT"
+          echo "target-folder=${{ github.workspace }}/release/mac_x64" >> "$GITHUB_OUTPUT"
+          echo "plugin-name=test_yaml" >> "$GITHUB_OUTPUT"
           echo "OS Build: ${{ matrix.os }}"
 
       - name: Check MacOS Stats
@@ -64,7 +64,7 @@ jobs:
         shell: bash
         run: |
           echo "make release folder"
-          mkdir -p ${{ steps.strings.outputs.target_folder }}
+          mkdir -p ${{ steps.strings.outputs.target-folder }}
           
           echo "Display files in the working folders"
           find ${{ steps.strings.outputs.build-output-dir }} -maxdepth 2 -type f          
@@ -73,14 +73,14 @@ jobs:
             echo -e "Coping the Release binaries"
             cd ${{ steps.strings.outputs.build-output-dir }}
             ls -l
-            cp ${{ steps.strings.outputs.plugin_name }}  "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}"
-            ls -l ${{ steps.strings.outputs.target_folder }}
+            cp ${{ steps.strings.outputs.plugin-name }}  "${{ steps.strings.outputs.target-folder }}/${{ steps.strings.outputs.plugin-name }}"
+            ls -l ${{ steps.strings.outputs.target-folder }}
           else
             echo -e "Coping the Debug binaries"
             cd ${{ steps.strings.outputs.build-output-dir }}
             ls -l
-            cp ${{ steps.strings.outputs.plugin_name }}  "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.D"
-            ls -l ${{ steps.strings.outputs.target_folder }}
+            cp ${{ steps.strings.outputs.plugin-name }}  "${{ steps.strings.outputs.target-folder }}/${{ steps.strings.outputs.plugin-name }}.D"
+            ls -l ${{ steps.strings.outputs.target-folder }}
           fi
 
       - name: Upload MacOS Build Artifact
@@ -111,8 +111,8 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}\cmake_build" >> "$GITHUB_OUTPUT"
-          echo "target_folder=${{ github.workspace }}\release\win_x64" >> "$GITHUB_OUTPUT"
-          echo "plugin_name=test_yaml" >> "$GITHUB_OUTPUT"
+          echo "target-folder=${{ github.workspace }}\release\win_x64" >> "$GITHUB_OUTPUT"
+          echo "plugin-name=test_yaml" >> "$GITHUB_OUTPUT"
           echo "OS Build: ${{ matrix.os }}"
 
 
@@ -150,7 +150,7 @@ jobs:
           
           
           echo "make release folder"          
-          md ${{ steps.strings.outputs.target_folder }}
+          md ${{ steps.strings.outputs.target-folder }}
 
           echo "Copy all ".xpl" files to release folder:"
           IF "${{ matrix.build_type }}" == "Release" (
@@ -160,8 +160,8 @@ jobs:
 
              dir 
 
-             echo copy /B /Y "${{ steps.strings.outputs.plugin_name }}.exe" "${{ steps.strings.outputs.target_folder }}\${{ steps.strings.outputs.plugin_name }}.xpl"
-             copy /B /Y ""${{ steps.strings.outputs.plugin_name }}.exe" "${{ steps.strings.outputs.target_folder }}\${{ steps.strings.outputs.plugin_name }}.xpl"             
+             echo copy /B /Y "${{ steps.strings.outputs.plugin-name }}.exe" "${{ steps.strings.outputs.target-folder }}\${{ steps.strings.outputs.plugin-name }}.xpl"
+             copy /B /Y ""${{ steps.strings.outputs.plugin-name }}.exe" "${{ steps.strings.outputs.target-folder }}\${{ steps.strings.outputs.plugin-name }}.xpl"             
              
           ) ELSE (
             echo "Coping the Debug binaries"
@@ -169,14 +169,14 @@ jobs:
 
             dir 
 
-            echo copy /B /Y "${{ steps.strings.outputs.plugin_name }}.exe" "${{ steps.strings.outputs.target_folder }}\${{ steps.strings.outputs.plugin_name }}.xpl.D"
-            copy /B /Y "${{ steps.strings.outputs.plugin_name }}.exe" "${{ steps.strings.outputs.target_folder }}\${{ steps.strings.outputs.plugin_name }}.xpl.D"
+            echo copy /B /Y "${{ steps.strings.outputs.plugin-name }}.exe" "${{ steps.strings.outputs.target-folder }}\${{ steps.strings.outputs.plugin-name }}.xpl.D"
+            copy /B /Y "${{ steps.strings.outputs.plugin-name }}.exe" "${{ steps.strings.outputs.target-folder }}\${{ steps.strings.outputs.plugin-name }}.xpl.D"
 
           )
           echo "Display Release Structure:"
-          dir /S ${{ steps.strings.outputs.target_folder }}
+          dir /S ${{ steps.strings.outputs.target-folder }}
 
-          REM for /R "${{ steps.strings.outputs.build-output-dir }}" "%a" IN (missionx.xpl) DO copy /B /Y "%a" "${{ steps.strings.outputs.target_folder }}/missionx.xpl.D"
+          REM for /R "${{ steps.strings.outputs.build-output-dir }}" "%a" IN (missionx.xpl) DO copy /B /Y "%a" "${{ steps.strings.outputs.target-folder }}/missionx.xpl.D"
 
 
       - name: Upload Windows Build Artifact
@@ -209,8 +209,8 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/cmake_build" >> "$GITHUB_OUTPUT"
-          echo "target_folder=${{ github.workspace }}/release/lin_x64" >> "$GITHUB_OUTPUT"
-          echo "plugin_name=test_yaml" >> "$GITHUB_OUTPUT"
+          echo "target-folder=${{ github.workspace }}/release/lin_x64" >> "$GITHUB_OUTPUT"
+          echo "plugin-name=test_yaml" >> "$GITHUB_OUTPUT"
           echo "OS Build: ${{ matrix.os }}"
 
 
@@ -243,7 +243,7 @@ jobs:
         shell: bash
         run: |
           echo "make release folder"
-          mkdir -p ${{ steps.strings.outputs.target_folder }}
+          mkdir -p ${{ steps.strings.outputs.target-folder }}
           
           echo "Display files in the working folders"
           find ${{ steps.strings.outputs.build-output-dir }} -maxdepth 2 -type f          
@@ -252,14 +252,14 @@ jobs:
             echo -e "Coping the Release binaries"
             cd ${{ steps.strings.outputs.build-output-dir }}
             ls -l
-            cp ${{ steps.strings.outputs.plugin_name }}  "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}"
-            ls -l ${{ steps.strings.outputs.target_folder }}
+            cp ${{ steps.strings.outputs.plugin-name }}  "${{ steps.strings.outputs.target-folder }}/${{ steps.strings.outputs.plugin-name }}"
+            ls -l ${{ steps.strings.outputs.target-folder }}
           else
             echo -e "Coping the Debug binaries"
             cd ${{ steps.strings.outputs.build-output-dir }}
             ls -l
-            cp ${{ steps.strings.outputs.plugin_name }}  "${{ steps.strings.outputs.target_folder }}/${{ steps.strings.outputs.plugin_name }}.D"
-            ls -l ${{ steps.strings.outputs.target_folder }}
+            cp ${{ steps.strings.outputs.plugin-name }}  "${{ steps.strings.outputs.target-folder }}/${{ steps.strings.outputs.plugin-name }}.D"
+            ls -l ${{ steps.strings.outputs.target-folder }}
           fi
 
       - name: Upload Linux Build Artifact
@@ -287,7 +287,7 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/release/test_yaml01" >> "$GITHUB_OUTPUT"          
-          echo "plugin_name=test_yaml01" >> "$GITHUB_OUTPUT"
+          echo "plugin-name=test_yaml01" >> "$GITHUB_OUTPUT"
           echo "OS Build: ${{ matrix.os }}"
 
 

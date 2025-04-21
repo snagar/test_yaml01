@@ -272,8 +272,8 @@ jobs:
   build:
     if: ( startsWith(github.ref_name, 'v') )
     runs-on: ubuntu-22.04
-    needs: [ build-osx, build-lin ]
-    # needs: [build-win, build-osx, build-lin ]
+    # needs: [ build-osx, build-lin ]
+    needs: [build-win, build-osx, build-lin ]
 
     # Steps to download artifact and combine to final build
     steps:

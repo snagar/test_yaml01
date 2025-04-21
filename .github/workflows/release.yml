@@ -187,7 +187,7 @@ jobs:
           cd ${{ steps.strings.outputs.target-folder }}
           dir
           
-          Compress-Archive -Path "${{ steps.strings.outputs.plugin-name }}.xpl.D" -DestinationPath "${{ steps.strings.outputs.plugin-name }}.D.zip"
+          Compress-Archive -Path "${{ steps.strings.outputs.plugin-name }}.xpl.D" -DestinationPath "${{ steps.strings.outputs.plugin-name }}.win.D.zip"
           
           dir
           

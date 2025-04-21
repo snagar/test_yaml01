@@ -379,7 +379,7 @@ jobs:
           fi
 
 
-      - name: Prepare Binary Files
+      - name: Prepare Compressed Binary Files
         if: ( startsWith(github.ref_name, 'v') )
         shell: bash
         run: |
@@ -392,7 +392,8 @@ jobs:
           split_size="90m"
           
           echo "Compressing '$folder_to_compress' to '$output_file'..."
-          (cd ./release && 7z a -t7z -v"$split_size" "${{ github.workspace }}/${{ steps.strings.outputs.plugin-name }}-${VERSION}.7z" *)
+          # (cd ./release && 7z a -t7z -v"$split_size" "${{ github.workspace }}/${{ steps.strings.outputs.plugin-name }}-${VERSION}.7z" *)
+          (cd ./release && 7z a -t7z "${{ github.workspace }}/${{ steps.strings.outputs.plugin-name }}-${VERSION}.7z" *)
           
           echo -e "\n---------"
           ls -l

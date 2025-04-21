@@ -304,7 +304,7 @@ jobs:
           echo -e "Display download folder content"
           ls -ltR ./download
           
-          echo -e "Create the build folder"
+          echo -e "Create the build folder [${{ steps.strings.outputs.build-output-dir }}]"
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}
           ls -l
           

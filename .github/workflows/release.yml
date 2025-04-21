@@ -270,10 +270,10 @@ jobs:
             ${{ github.workspace }}/release/*
 
   build:
-    if: ( startsWith(github.ref_name, 'v') )
+    #if: ( startsWith(github.ref_name, 'v') )
     runs-on: ubuntu-22.04
-    # needs: [ build-osx, build-lin ]
-    needs: [build-win, build-osx, build-lin ]
+    needs: [ build-lin ]
+    # needs: [build-win, build-osx, build-lin ]
 
     # Steps to download artifact and combine to final build
     steps:
@@ -290,6 +290,8 @@ jobs:
           echo "plugin-name=test_yaml01" >> "$GITHUB_OUTPUT"
           echo "OS Build: ${{ matrix.os }}"
 
+          echo "Check gh version"
+          gh --version
 
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4

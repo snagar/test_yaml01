@@ -427,16 +427,15 @@ jobs:
           echo -e "\n---------"
           
 
-#      - name: Create Release
-#        id: create_release
-#        uses: softprops/action-gh-release@v2
-#        if: ( startsWith(github.ref_name, 'v') )
-#        with:
-#          files: |
-#            ${{ github.workspace }}/notes.md
-#            ${{ github.workspace }}/${{ steps.strings.outputs.plugin-name }}*7z*
-#          prerelease: ${{ contains(github.ref_name, '-b') || contains(github.ref_name, 'beta') }}
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        if: ( startsWith(github.ref_name, 'v') )
+        with:
+          files: |
+            ${{ github.workspace }}/${{ steps.strings.outputs.plugin-name }}*7z*
+          prerelease: ${{ contains(github.ref_name, '-b') || contains(github.ref_name, 'beta') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
           

@@ -331,7 +331,7 @@ jobs:
           echo -e "The target branch is: '$TARGET_BRANCH' "
           
           if [ -d "release" ]; then
-            cd "$TARGET_BRANCH"
+            cd release  ## The build folder is not dynamic by name. Should always be release
           
             ## Create target branch
             echo -e "Create the new branch: $TARGET_BRANCH" 

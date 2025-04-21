@@ -161,7 +161,7 @@ jobs:
              dir 
 
              echo copy /B /Y "${{ steps.strings.outputs.plugin-name }}.exe" "${{ steps.strings.outputs.target-folder }}\${{ steps.strings.outputs.plugin-name }}.xpl"
-             copy /B /Y ""${{ steps.strings.outputs.plugin-name }}.exe" "${{ steps.strings.outputs.target-folder }}\${{ steps.strings.outputs.plugin-name }}.xpl"             
+             copy /B /Y "${{ steps.strings.outputs.plugin-name }}.exe" "${{ steps.strings.outputs.target-folder }}\${{ steps.strings.outputs.plugin-name }}.xpl"             
              
           ) ELSE (
             echo "Coping the Debug binaries"

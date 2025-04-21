@@ -179,6 +179,19 @@ jobs:
           REM for /R "${{ steps.strings.outputs.build-output-dir }}" "%a" IN (missionx.xpl) DO copy /B /Y "%a" "${{ steps.strings.outputs.target-folder }}/missionx.xpl.D"
 
 
+      - name: Post Build - Prepare binaries folder prior to loading into artifact
+        if: (  startsWith(matrix.build_type, 'Debug' ) )
+        shell: powershell
+        run: |
+          # Compress a single file
+          cd ${{ steps.strings.outputs.target-folder }}
+          dir
+          
+          Compress-Archive -Path "${{ steps.strings.outputs.plugin-name }}.xpl.D" -DestinationPath "${{ steps.strings.outputs.plugin-name }}.D.zip"
+          
+          dir
+          
+
       - name: Upload Windows Build Artifact
         uses: actions/upload-artifact@v4
         with:

@@ -330,11 +330,11 @@ jobs:
           
           echo -e "The target branch is: '$TARGET_BRANCH' "
           
-          if [ -d "$TARGET_BRANCH" ]; then
-            echo "Directory ${TARGET_BRANCH} does exist."
-            # cd "$TARGET_BRANCH"
+          if [ -d "release" ]; then
+            cd "$TARGET_BRANCH"
           
             ## Create target branch
+            echo -e "Create the new branch: $TARGET_BRANCH" 
             git checkout -b ${TARGET_BRANCH}
           
           
@@ -354,16 +354,18 @@ jobs:
             git status
             echo -e "\n<---------"
             
-            echo -e "\nCommit branch ${TARGET_BRANCH}\n---------------------"
-            git commit -m "new ${TARGET_BRANCH} - ${{ github.ref_name }}"
             
+            if [[ "$TARGET_BRANCH" != "dry-run" ]]; then 
+              echo -e "\nCommit branch ${TARGET_BRANCH}\n---------------------"
+              git commit -m "new ${TARGET_BRANCH} - ${{ github.ref_name }}"
+              
+              
+              echo -e "github.actor: ${{ github.actor }},  github.repository: ${{ github.repository }}"
+              echo -e "\ngithub.ref - ${{ github.ref }} - ${{ github.ref_name }} \n"
+              git remote add authenticated-origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
             
-            echo -e "github.actor: ${{ github.actor }},  github.repository: ${{ github.repository }}"
-            echo -e "\ngithub.ref - ${{ github.ref }} - ${{ github.ref_name }} \n"
-            git remote add authenticated-origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-          
-            ### Push the branch back.. or not
-            if [[ $TARGET_BRANCH != "dry-run" ]]; then          
+              ### Push the branch back.. or not
+                      
               echo -e "\nPushing ${TARGET_BRANCH}\n---------------------"
               git push authenticated-origin ${TARGET_BRANCH} --force
                         
@@ -374,7 +376,7 @@ jobs:
               echo "Will not push back the '$TARGET_BRANCH'. It is only for tests."
             fi
           else
-            echo -e "Could not find target branch: $TARGET_BRANCH"
+            echo -e "Could not find [release] directory."
             ls -l
           fi
 

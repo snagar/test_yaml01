@@ -366,7 +366,7 @@ jobs:
             echo -e "Configuring git before pushing branch '${TARGET_BRANCH}' ."
             git config --global user.email "snagar.dev@protonmail.com"
             git config --global user.name "snagar"
-            gh ${TARGET_BRANCH} create "${{ github.ref_name }}" --title "Release ${{ github.ref_name }}" --notes-file notes.md 
+            gh ${TARGET_BRANCH} create "${{ github.ref_name }}" --title "Release ${{ github.ref_name }}" --notes-file ${{ github.workspace }}/notes.md 
                         
             echo -e "--- Display Branches ---"
             git branch -a          

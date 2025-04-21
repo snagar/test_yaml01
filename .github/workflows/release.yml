@@ -176,8 +176,6 @@ jobs:
           echo "Display Release Structure:"
           dir /S ${{ steps.strings.outputs.target-folder }}
 
-          REM for /R "${{ steps.strings.outputs.build-output-dir }}" "%a" IN (missionx.xpl) DO copy /B /Y "%a" "${{ steps.strings.outputs.target-folder }}/missionx.xpl.D"
-
 
       - name: Post Build - Compress debug binary using PowerShell
         if: (  startsWith(matrix.build_type, 'Debug' ) )
@@ -190,6 +188,13 @@ jobs:
           dir
           
           Compress-Archive -Path "${{ steps.strings.outputs.plugin-name }}.xpl.D" -DestinationPath "${{ steps.strings.outputs.plugin-name }}.win.D.zip"
+                   
+          if (Test-Path "${{ steps.strings.outputs.plugin-name }}.win.D.zip") {
+            Write-Host "The file '${{ steps.strings.outputs.plugin-name }}.win.D.zip' exists."
+            Remove-Item "${{ steps.strings.outputs.plugin-name }}.xpl.D" -Force
+          } else {
+            Write-Host "The file '${{ steps.strings.outputs.plugin-name }}.win.D.zip' does not exists."
+          }
           
           Write-Host "After Compressing"
           dir

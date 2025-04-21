@@ -345,6 +345,8 @@ jobs:
 
       - name: Prepare Release Branch
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |          
           
           TARGET_BRANCH="dry-run"

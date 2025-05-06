@@ -24,7 +24,7 @@ jobs:
         id: strings
         shell: bash
         run: |
-          echo "global-test-var=test123" >> "$GITHUB_OUTPUT"
+          echo "global-test-var='test 1234'" >> "$GITHUB_OUTPUT"
 
       - name: Check Global Variable
         shell: bash

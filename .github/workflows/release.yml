@@ -25,6 +25,8 @@ jobs:
         shell: bash
         run: |
           echo "global-test-var=This is a test" >> "$GITHUB_OUTPUT"
+          
+          echo -e "\nGlobal Variable value for 'global-test-var' is: ${{ steps.strings.outputs.global-test-var }} \n"
   
 
   build-osx:
